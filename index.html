@@ -115,7 +115,29 @@
 </head>
 <body>
 <audio id="bgMusic" loop></audio>
-    
+    const playlist = [
+  "en roja.mp3",
+  "aathi.mp3",
+  "kalyni.mp3",
+  "kalyani mix.mp3",
+  "kannukulla.mp3",
+  "kurunmgli.mp3",
+    "pesamale.mp3",
+];
+
+const randomIndex = Math.floor(Math.random() * playlist.length);
+const selectedSong = playlist[randomIndex];
+
+const music = document.getElementById('bgMusic');
+if (music) {
+  music.src = selectedSong;
+}
+
+document.body.addEventListener('click', () => {
+    if (music && music.paused) {
+        music.play().catch(error => console.log("Audio play error:", error));
+    }
+}, { once: true });
     <div class="container">
         <h1> A Daily Note For You <span class="heart">❤️</span></h1>
         <div class="day-badge" id="dayCounter">Day 1 / 100</div>
