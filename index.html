@@ -302,7 +302,7 @@
 <body>
 
     <div class="container">
-        <h1>தினமும் ஒரு அன்புச் செய்தி <span class="heart">❤️</span></h1>
+        <h1>message of the day💌<span class="heart">❤️</span></h1>
         <div class="day-badge" id="dayCounter">Day 1 / 100</div>
 
         <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope(event)">
@@ -318,14 +318,14 @@
             </div>
         </div>
 
-        <div class="tap-hint" id="tapHint">💌 ரிப்பனை அவிழ்த்து கடிதத்தைப் பிரிக்கவும்...</div>
+        <div class="tap-hint" id="tapHint">💌 Untie the ribbon and separate the letter......</div>
 
         <button class="music-btn" id="musicBtn" onclick="toggleMusic(event)">
-            🎵 இசையை நிறுத்து
+            🎵 stop music
         </button>
 
         <div class="lock-msg" id="lockMsg">
-            🔒 இன்றைய நாளுக்கான செய்தி திறக்கப்பட்டுவிட்டது! அடுத்த செய்தி நாளை திறக்கும்.
+            🔒 Today's message has been opened! The next message will open tomorrow.
         </div>
     </div>
 
@@ -510,7 +510,7 @@
                     musicBtn.style.display = 'flex';
                 }).catch(() => {
                     musicBtn.style.display = 'flex';
-                    musicBtn.innerText = '🎵 இசையை இயக்கு';
+                    musicBtn.innerText = '🎵 Play Music';
                 });
             }
 
@@ -525,15 +525,15 @@
 
             if (audio.paused) {
                 audio.play();
-                musicBtn.innerText = '🎵 இசையை நிறுத்து';
+                musicBtn.innerText = '🎵 pause the music;
             } else {
                 audio.pause();
-                musicBtn.innerText = '🎵 இசையை இயக்கு';
+                musicBtn.innerText = '🎵 Play The Music;
             }
         }
 
         function createHearts(event) {
-            const heartIcons = ['❤️', '💖', '💕', '💗', '✨', '🌸', '💌'];
+            const heartIcons = ['🦋', '💖', '💕', '💝', '✨', '🌸', '💌'];
             const count = 18;
 
             for (let i = 0; i < count; i++) {
