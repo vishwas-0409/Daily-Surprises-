@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Surprise Roll - 100 Days of Love</title>
+    <title>Daily Surprise Envelope - 100 Days of Love</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,279 +19,542 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.15);
             text-align: center;
-            max-width: 450px;
+            max-width: 480px;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             color: #d63384;
             font-size: 24px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .day-badge {
             background: #ffe3e3;
             color: #d63384;
-            padding: 6px 15px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 25px;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(214, 51, 132, 0.1);
         }
 
-        /* Paper Roll Animation Container */
-        .box-wrapper {
+        .envelope-wrapper {
             perspective: 1000px;
-            margin: 30px 0;
-        }
-
-        .paper-roll {
-            background: #fffdf0;
-            border: 2px dashed #e6c280;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: transform 0.6s ease, max-height 0.8s ease, opacity 0.5s;
-            max-height: 80px;
-            overflow: hidden;
+            margin: 20px auto 30px;
+            width: 320px;
+            height: 220px;
             position: relative;
+            cursor: pointer;
         }
 
-        .paper-roll::before {
-            content: "📜 Tap To Reveal 🎀";
-            display: block;
-            color: #b37d14;
-            font-weight: bold;
-            font-size: 16px;
+        .envelope {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #e06d88;
+            border-radius: 12px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+            transition: transform 0.6s ease;
         }
 
-        .paper-roll.open {
-            max-height: 300px;
+        .envelope-wrapper:hover .envelope {
+            transform: translateY(-5px);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 115px solid #c9516e;
+            transform-origin: top;
+            transition: transform 0.8s ease 0.4s, z-index 0.2s ease 0.4s;
+            z-index: 5;
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #f28da4;
+            border-right: 160px solid #f28da4;
+            border-top: 100px solid transparent;
+            border-bottom: 120px solid #e87b95;
+            border-radius: 0 0 12px 12px;
+            z-index: 4;
+        }
+
+        .ribbon-vertical {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #fff099, #ffd700);
+            z-index: 6;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.15);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+        }
+
+        .ribbon-horizontal {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 34px;
+            background: linear-gradient(180deg, #ffd700, #fff099, #ffd700);
+            z-index: 6;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.15);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+        }
+
+        .ribbon-bow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, #ffed4a 0%, #d4af37 100%);
+            border-radius: 50%;
+            z-index: 7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25), inset 0 0 4px #ffffff;
+            transition: opacity 0.4s ease, transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .ribbon-bow::after {
+            content: "🎀";
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 85%;
             background: #ffffff;
-            border: 2px solid #ff85a2;
-            transform: rotateX(0deg) scale(1.05);
+            border-radius: 10px;
+            padding: 20px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 3;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s, opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 2px dashed #f8bbd0;
         }
 
-        .paper-roll.open::before {
+        .letter-content {
+            color: #4a4a4a;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            opacity: 0;
+            transition: opacity 0.6s ease 1.4s;
+            max-height: 100%;
+            overflow-y: auto;
+        }
+
+        .envelope-wrapper.open .ribbon-vertical,
+        .envelope-wrapper.open .ribbon-horizontal {
+            opacity: 0;
+            transform: scale(1.2);
+            pointer-events: none;
+        }
+
+        .envelope-wrapper.open .ribbon-bow {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.8) rotate(45deg);
+            pointer-events: none;
+        }
+
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 2;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translateY(-130px) scale(1.08);
+            z-index: 10;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            height: 220px;
+        }
+
+        .envelope-wrapper.open .letter-content {
+            opacity: 1;
+        }
+
+        .tap-hint {
+            color: #b37d14;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .envelope-wrapper.open + .tap-hint {
             display: none;
         }
 
-        .message-text {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease 0.3s;
-            color: #4a4a4a;
-            font-size: 18px;
-            line-height: 1.6;
-            word-wrap: break-word;
+        .music-btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+            transition: background 0.3s, transform 0.2s;
         }
 
-        .paper-roll.open .message-text {
-            opacity: 1;
-            transform: translateY(0);
+        .music-btn:hover {
+            background: #d63384;
+            transform: scale(1.05);
         }
 
         .lock-msg {
-            color: #888;
+            color: #666;
             font-size: 14px;
-            margin-top: 15px;
+            margin-top: 20px;
             display: none;
+            line-height: 1.5;
+            background: #fff5f7;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #ffe3e3;
         }
 
         .heart {
             color: #ff4d6d;
             font-size: 22px;
         }
+
+        .floating-heart {
+            position: fixed;
+            font-size: 24px;
+            color: #ff4d6d;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatUp 3s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-120px) scale(1.3) rotate(20deg);
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(-280px) scale(1) rotate(-20deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-<audio id="bgMusic" loop></audio>
-    <body>
-<audio id="bgMusic" loop></audio>
 
-<script>
-const playlist = [
-  "en roja.mp3",
-  "aathi.mp3",
-  "kalyani.mp3",
-  "kalyani mix.mp3",
-  "kannukulla.mp3",
-  "kurunmgli.mp3",
-  "pesamale.mp3"
-];
-
-const randomIndex = Math.floor(Math.random() * playlist.length);
-const selectedSong = playlist[randomIndex];
-
-const music = document.getElementById('bgMusic');
-if (music) {
-  music.src = selectedSong;
-}
-
-document.body.addEventListener('click', () => {
-    if (music && music.paused) {
-        music.play().catch(error => console.log("Audio play error:", error));
-}, { once: true });
-</script>
     <div class="container">
-        <h1> A Daily Note For You <span class="heart">❤️</span></h1>
+        <h1>தினமும் ஒரு அன்புச் செய்தி <span class="heart">❤️</span></h1>
         <div class="day-badge" id="dayCounter">Day 1 / 100</div>
 
-        <div class="box-wrapper">
-            <div class="paper-roll" id="paperRoll" onclick="openRoll()">
-                <div class="message-text" id="messageBox"></div>
+        <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope(event)">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+                <div class="ribbon-bow"></div>
+                <div class="letter" id="letterCard">
+                    <div class="letter-content" id="messageBox"></div>
+                </div>
+                <div class="envelope-pocket"></div>
             </div>
         </div>
 
+        <div class="tap-hint" id="tapHint">💌 ரிப்பனை அவிழ்த்து கடிதத்தைப் பிரிக்கவும்...</div>
+
+        <button class="music-btn" id="musicBtn" onclick="toggleMusic(event)">
+            🎵 இசையை நிறுத்து
+        </button>
+
         <div class="lock-msg" id="lockMsg">
-            🔒 இன்றைய நாளுக்கான செய்தி திறக்கப்பட்டுவிட்டது! அடுத்த செய்தி நாளை காலை திறக்கும்.
+            🔒 இன்றைய நாளுக்கான செய்தி திறக்கப்பட்டுவிட்டது! அடுத்த செய்தி நாளை திறக்கும்.
         </div>
     </div>
 
-    <script>
-        // 👇 இங்கு உங்கள் 100 மெசேஜ்களை மாற்றிக்கொள்ளலாம்
-        const messages = [
-              "உன்னோட ஸ்வீட்டான அந்த குரல்.",
-  "எக்ஸாம் டைம்ல உன்னை பார்க்க உங்க வீட்டுக்கு ஓடி வந்த அந்த தருணங்கள்.",
-  "உன்னோட ஸ்பெஷலான ட்ரடிஷனல் டிரெஸ்ஸிங் ஸ்டைல்.",
-  "இந்த போட்டோ நல்லா இருக்கான்னு என்கிட்ட கேட்டு கன்ஃபர்ம் பண்ணிக்கிறது.",
-  "நீ இல்லாம என்னோட பழைய நினைவுகளை நினைச்சு கூட பார்க்க முடியாது.",
-  "ரெண்டு பேரும் சேர்ந்து ஹோம்வொர்க் பண்ணிக்கிட்டே காபி குடிச்ச தருணம்.",
-  "உன்னோட பிறந்தநாளை மறக்காம கொண்டாடுற அந்த ஆசை.",
-  "தேனிக்கு மாறுறதுக்கு முன்னாடி, பிப்ரவரி 13 அன்னைக்கு உனக்காக யோசிச்சு கொடுத்த அந்த சோப் கிப்ட்.",
-  "நான் கவலையா இருக்கும்போது அதை உன் குரலை வச்சே கண்டுபிடிச்சுடுறது.",
-  "உனக்காக நான் செய்யுற சின்ன சின்ன விஷயத்தையும் பெருசா நினைக்கிறது.",
-  "உன்னோட டான்ஸ் ஸ்டெப்ஸ்ல இருக்குற அந்த எனர்ஜி.",
-  "உன்னை பார்த்த அப்புறம் என் லைஃப் ரொம்ப அழகா மாறுச்சு.",
-  "நாம பேசுற ஒவ்வொரு போன் காலையும் ஒரு மெமரியா மாத்தணும்.",
-  "உன்னோட ஒவ்வொரு மெசேஜும் எனக்கு தரும் அந்த குட்டி சந்தோஷம்.",
-  "போன்ல நீ அமைதியா பேசினாலும் அதுல இருக்குற ஒரு தனி அழகு.",
-  "நாம பிரிஞ்சிருந்தாலும், என் மனசுல நீ மட்டும்தான் நிறைஞ்சிருக்கேன்னு புரிய வச்சது.",
-  "நீ பேசிக்கிட்டே இருக்கணும், நான் கேட்டுக்கிட்டே இருக்கணும்னு தோண்ற அந்த உணர்வு.",
-  "உனக்கு புடிச்ச இடங்களுக்கு உன்னை கூட்டிட்டு போகணும்.",
-  "எய்த் முடிச்சு நீ வேற ஊர் போனாலும் உன்னை தேட வச்ச உன்னோட அந்த அன்பு.",
-  "உன்னோட அழகான கண்கள்.",
-  "என்னோட வளர்ச்சிக்கு நீ கொடுக்கிற பாசிட்டிவ் எனர்ஜி.",
-  "உன்னை பத்தி என்கிட்ட இருக்குற காதல் உணர்வு உனக்கு புரியும்ன்ற அந்த நம்பிக்கை.",
-  "உன்னோட சிரிப்பு சத்தம் போன் வழியா கேட்கும்போது வர்ற சந்தோஷம்.",
-  "உனக்கு புடிச்ச கலர்ல உனக்கு கிப்ட்ஸ் வாங்கித் தரணும்.",
-  "ஸ்போர்ட்ஸ் டே அன்னைக்கு கலர் டிரஸ்ல உன்னை முதன்முதலா பார்த்த அந்த நிமிடம்.",
-  "கஷ்டமான சூழ்நிலையிலும் நீ காட்டுற தன்னம்பிக்கை.",
-  "உன்னோட பேச்சுல இருக்குற அந்த இயல்பான குறும்பு.",
-  "நீ சமைக்கிற உணவை ரசிச்சு சாப்பிடணும்.",
-  "உன்னோட முகத்துல எப்பவும் சிரிப்பு இருக்குற மாதிரி பாத்துக்கணும்.",
-  "உன்னோட எல்லா சாதனைகளுக்கும் நான் முன்னாடி நின்னு கைதட்டணும்.",
-  "நாம சந்திக்கிற ஒவ்வொரு சின்ன தருணமும் எனக்கு பெரிய பொக்கிஷம்.",
-  "நீ எனக்காக ஒதுக்குற அந்த சின்ன நேரங்கள்.",
-  "காலங்கள் மாறினாலும் மாறாம இருக்குற நம்ம காதல்.",
-  "என்னோட சின்ன சின்ன மேட்டரையும் நீ ஞாபகம் வச்சிருக்கிறது.",
-  "உன்னோட எளிமையான அழகு.",
-  "நீ அமைதியா இருக்கும்போது உன்கிட்ட தெரியுற ஒரு தனி அழகு.",
-  "நீ பாடும்போது உலகமே அமைதியான மாதிரி இருக்குற அந்த ஃபீல்.",
-  "உன்னோட வார்த்தைகள் எனக்கு எப்போதுமே ஒரு பெரிய நம்பிக்கை தரும்.",
-  "மத்தவங்களை காயப்படுத்தாம பேசுற உன்னோட பொறுமை.",
-  "நீ என் கூட இருக்கும்போது எனக்கு எந்த பயமும் வராது.",
-  "உனக்கு ஒரு கஷ்டம்னா யோசிக்காம என்னைக் கூப்பிடுற அந்த இடத்தை நான் அடையணும்.",
-  "உனக்கு புடிச்ச ட்ரடிஷனல் உடைகளுக்கு என்னோட கமெண்ட்ஸால் உன்னை மகிழ்விக்கணும்.",
-  "நாம சேர்ந்து செலவழிச்ச ஒவ்வொரு நிமிடமும் ஸ்பெஷல்.",
-  "உன்னோட கஷ்டமான நேரத்துல முதல் ஆளா உன்னோட கைய புடிச்சுக்கணும்.",
-  "உன்கிட்ட பாட்டு பாட சொல்ல கேட்கும்போது எனக்குள்ள வர சின்ன பயமும் ஆசையும்.",
-  "உங்க வீட்ல நீ செஞ்சு கொடுத்த அந்த சுவையான பாயாசம்.",
-  "வாட்ஸ்அப்ல பழைய நினைவுகளையும் போட்டோஸையும் ஷேர் பண்ணிக்கிட்டது.",
-  "உன்னோட குரல்ல இருக்குற அந்த குழந்தைத்தனம்.",
-  "நாம ரெண்டு பேரும் ஒரே நேரத்துல ஒரே விஷயத்தை யோசிக்கிறது.",
-  "நீ இல்லாம என் வாழ்க்கை முழுமை அடையாது.",
-  "இன்ஸ்டாகிராம்ல நாம முதன்முதலா மெசேஜ் அனுப்ப ஆரம்பிச்ச அந்த டைம்.",
-  "உன்னோட ஆழமான அன்பை எந்த இடத்துலயும் விட்டுக்கொடுக்காம இருக்கிறது.",
-  "உன்னை விட சிறந்த ஒரு நபரை என்னால யோசிச்சு கூட பார்க்க முடியாது.",
-  "என்னோட இங்கிலீஷ் அசைன்மென்ட் கஷ்டமா இருந்தப்ப நீ ஆசையா உதவி பண்ணுனது.",
-  "உனக்காக இன்னும் நிறைய சர்ப்ரைஸ் கிப்ட்ஸ் ரெடி பண்ணணும்.",
-  "நீ போன்ல பாட்டு பாடும்போது மனசுல இருக்கிற எல்லா ஸ்ட்ரெஸும் ஓடி போறது.",
-  "நாம ரெண்டு பேரும் சேர்ந்து போட்டோ எடுத்துக்க போற அந்த எதிர்கால தருணம்.",
-  "உன்னோட ஒவ்வொரு பிறந்தநாளையும் ரொம்ப ஸ்பெஷலா மாத்தணும்.",
-  "நீ எனக்கு அனுப்பின உன்னோட சின்ன வயசு போட்டோஸ்.",
-  "நாம தூரமா இருந்தாலும் பக்கத்துல இருக்குற மாதிரி உணர வைக்கிறது.",
-  "நீ பேசும்போது நடுவுல வர்ற உன்னோட செல்லமான கோபம்.",
-  "எனக்கு எது நல்லதும் அதை தயங்காம சொல்ற உன்னோட உரிமை.",
-  "என்னோட வாழ்க்கையோட அழகிய பக்கங்கள் எல்லாமே உன்னை பத்தினதுதான்.",
-  "நாம முதன்முதலா பேசுன அந்த ஸ்பெஷலான வீடியோ கால்.",
-  "நாம பேசும்போது நேரம் போறதே தெரியாம இருக்குறது.",
-  "உன்னோட அன்பான குட் மார்னிங் / குட் நைட் மெசேஜ்கள்.",
-  "இன்னும் என்னை லவ் பண்றியான்னு நீ செல்லமா கேட்குற அந்த கேள்வி.",
-  "மதுரை எக்ஸ்போவுல உன்னை திடீர்னு பார்த்தப்போ உண்டான அந்த பிரமிப்பு.",
-  "எல்லார்கிட்டயும் நீ காட்டுற அந்த அன்பான மனசு.",
-  "நீ ஆடுன டான்ஸ் வீடியோவை எனக்கு அனுப்பி சந்தோஷப்பட்டது.",
-  "என்னோட கனவுகளுக்கு நீ கொடுக்கிற பெரிய சப்போர்ட்.",
-  "நம்ம ரெண்டு பேருக்கும் நடுவுல இருக்குற அந்த அழகான அண்டர்ஸ்டாண்டிங்.",
-  "உன்னை முதன்முதலா பார்த்த நாள்ல இருந்து இன்னைக்கு வரைக்கும் குறையாத ஈர்ப்பு.",
-  "பழைய நினைவுகளை பேசி பேசி நாம சிரிச்சு மகிழ்றது.",
-  "உனக்கு புடிச்ச பாடல்களை நான் அமைதியா கேட்டுக்கிட்டே இருக்கணும்.",
-  "உண்மைனா என்ன, காதல்னா என்னன்னு எனக்கு புரிய வச்சது.",
-  "வாய்ஸ் நோட் வழியா நாம வளர்த்துக்கிட்ட அந்த நெருக்கம்.",
-  "நீ சிரிக்கும்போது உன்னோட முகத்துல வர்ற அந்த வெளிச்சம்.",
-  "நாம சேர்ந்து ஒரு நீளமான பயணம் போகணும்.",
-  "அன்னைக்கு உன்கிட்ட பேச முடியலனாலும், உங்க அம்மாக்கிட்ட உன்னை பத்தி விசாரிச்சது.",
-  "எந்த விஷயம்னாலும் என்கிட்ட யோசிக்காம வந்து சொல்ற உன்னோட நம்பிக்கை.",
-  "உன்னோட பாசமான கவனிப்பு எனக்கு ரொம்ப பிடிக்கும்.",
-  "உன்னோட கனவுகள் எல்லாம் நிஜமாக நான் துணையா இருக்கணும்.",
-  "உன்னோட ஒவ்வொரு பாட்டும் எனக்கு ரொம்பவே ஸ்பெஷல்.",
-  "நீ எனக்காக செய்யுற சின்ன சின்ன தியாகங்கள்.",
-  "உன்னை எப்பவும் பாதுகாப்பா உணர வைக்கணும்.",
-  "உன்னோட எல்லாக் கவலைகளையும் மறக்கடிக்கிற அளவுக்கு உன்னை சந்தோஷப்படுத்தணும்.",
-  "நாம ரெண்டு பேரும் நேர்ல சந்திச்சு ரொம்ப நேரம் பேசணும்.",
-  "காலம் முழுதும் உனக்கு உண்மையான காதலனா, துணையா இருக்கணும்.",
-  "என்னோட லைஃப்ல கிடைச்ச மிகச்சிறந்த பொக்கிஷம் நீ.",
-  "உனக்கு புடிச்ச உணவகத்துக்கு கூட்டிட்டு போய் உனக்கு புடிச்சதை வாங்கித் தரணும்.",
-  "நம்ம லைஃப்ல வர்ற எல்லா நல்ல விஷயங்களையும் சேர்ந்து கொண்டாடணும்.",
-  "ஒன்னரை மணி நேரம் போன்ல குடும்பத்தை பத்தியும் லைஃபைப் பத்தியும் பேசுனது.",
-  "உனக்கு புடிச்ச பாடல்களை எனக்கு ஷேர் பண்றது.",
-  "இடைவேளைக்குப் பிறகு நாம கடந்து வந்த இந்த அழகிய பாதை.",
-  "எனக்குள்ள இருக்குற நல்ல விஷயங்களை வெளிக்கொண்டு வந்தது நீதான்.",
-  "சின்ன சின்ன விஷயத்துக்கும் நீ காட்டுற அக்கறை.",
-  "எல்லாரையும் மதிச்சு நடக்குற உன்னோட பண்பு.",
-  "நான் எங்கே இருந்தாலும் என்னை பத்தி யோசிக்கிற உன்னோட மனசு.",
-  "மொத்தத்துல... நீ நீயா இருக்கிறதுனால தான் எனக்கு உன்னை இருக்கிறதுனால தான் எனக்கு உன்னை இவ்ளோ பிடிச்சிருக்கு!"
-];
-            // இதேபோல 100 வரை comma (,) போட்டு தொடரலாம்...
+    <audio id="bgMusic" loop preload="auto"></audio>
 
-        // நாள்களை கணக்கிடுதல் (Daily Lock Logic)
-        const startDateKey = 'roll_start_date';
+    <script>
+        const songList = [
+            "song1.mp3",
+            "song2.mp3",
+            "song3.mp3",
+            "song4.mp3",
+            "song5.mp3",
+            "song6.mp3",
+            "song7.mp3"
+        ];
+
+        const messages = [
+            "1. உங்களுடைய புன்னகை தான் என் நாளின் சிறந்த தொடக்கம்! 😊",
+            "2. நீ என் வாழ்வில் வந்ததற்கு தினமும் நன்றி சொல்கிறேன்! ❤️",
+            "3. எவ்வளவு கஷ்டமான நாளாக இருந்தாலும் உன்னுடன் பேசினால் எல்லாம் சரியாகிவிடும்.",
+            "4. உன் அன்பு எனக்குக் கிடைத்த மிகப்பெரிய பொக்கிஷம். ✨",
+            "5. எப்போதும் உன்னை மகிழ்ச்சியாக வைத்திருக்க விரும்புபவன் நான்.",
+            "6. இன்று உனக்கான ஒரு சிறப்பான நாளாக அமையட்டும்! 🌸",
+            "7. உன் குரல் கேட்கும் ஒவ்வொரு நொடியும் எனக்கு சிறப்புத் தான்.",
+            "8. எப்போதும் என்னோடு இரு, அதுவே எனக்கு போதும்! 💕",
+            "9. உலகின் சிறந்த மனிதருக்கு என் இனிய காலை வணக்கம்!",
+            "10. நீ இல்லாமல் என் உலகம் முழுமை பெறாது. 💖",
+            "11. உன் நினைவுகள் என் இதயத்திற்கு என்றும் இனிமையானவை.",
+            "12. என் வாழ்க்கையின் ஒவ்வொரு அழகிய தருணத்திலும் நீ இருக்கிறாய்.",
+            "13. நீ சிரிக்கும்போது இந்த உலகமே அழகாக மாறுகிறது! 😊",
+            "14. உன்னை நேசிப்பது என் வாழ்வின் மிகச் சிறந்த முடிவு.",
+            "15. எனக்குக் கிடைத்த மிகப்பெரிய பரிசு உன்னுடைய அன்புதான். 🎁",
+            "16. எந்த சூழ்நிலையிலும் உனக்காக நான் இருப்பேன். ❤️",
+            "17. உன்னுடைய அன்பான வார்த்தைகள் என் சோர்வை நீக்கும் மருந்து.",
+            "18. நீ என் வாழ்வில் வந்த பிறகு தான் காதல் என்றால் என்னவென்று புரிந்தது.",
+            "19. என் ஒவ்வொரு பிரார்த்தனையிலும் உனக்கான இடம் உண்டு. 🙏",
+            "20. உன்னுடன் கழிக்கும் ஒவ்வொரு நொடியும் ஒரு பொன்னான நேரம்.",
+            "21. உன் கண்கள் பேசும் மொழியை நான் தினமும் ரசிக்கிறேன்.",
+            "22. என் வாழ்வின் அழகான கவிதை நீ! 📜",
+            "23. உன்னை மறக்க முடியாத அளவுக்கு என் மனதை கவர்ந்துவிட்டாய்.",
+            "24. உலகின் அனைத்து மகிழ்ச்சியும் உனக்குக் கிடைக்கட்டும். 🌟",
+            "25. உன் அன்பு என் இதயத்திற்கு என்றென்றும் அமைதியை தருகிறது.",
+            "26. நான் உன்னை நேசிப்பது வார்த்தைகளுக்கு அப்பாற்பட்டது.",
+            "27. நீ தொடும் ஒவ்வொரு காரியமும் வெற்றியில் முடியட்டும்! 🌺",
+            "28. என் வாழ்க்கைப் பயணத்தில் உன்னோடு நடப்பதே என் ஆசை.",
+            "29. எப்போதும் உன்னைப் பாதுகாப்பாகவும் அன்பாகவும் பார்த்துக் கொள்வேன்.",
+            "30. நீ என் வாழ்வில் வீசும் தென்றல் காற்று. 🍃",
+            "31. உன்னுடன் பேசும்போது நேரம் போவதே தெரியவில்லை.",
+            "32. என் தனிமையை மாற்றிய ஒரே மாயக்காரன் நீ தான். ✨",
+            "33. உன்னுடைய அமைதியான அன்பு எனக்கு மிகப்பெரிய பலம்.",
+            "34. என்றும் குறையாத அன்பு உனக்காக என் இதயத்தில் உண்டு.",
+            "35. உன்னை பார்த்த அந்த முதல் நொடி இன்னும் என் நினைவில் இருக்கிறது. 😍",
+            "36. வாழ்க்கை என்னும் கடலில் நீ தான் என் கலங்கரை விளக்கம்.",
+            "37. நீ சந்தோஷமாக இருக்கும் போது என் மனமும் நிறைகிறது.",
+            "38. என்றும் பிரியாத அன்பு என்றென்றும் நமக்குள் இருக்கட்டும்.",
+            "39. உனக்காக வாழும் ஒவ்வொரு நாளும் எனக்கு மிகவும் பிடிக்கும்.",
+            "40. உன்னுடைய ஒரு மெல்லிய சிரிப்பு என் எல்லா கவலையையும் போக்கிவிடும்.",
+            "41. நீ தான் என் வாழ்க்கையின் வசந்த காலம்! 🌸",
+            "42. என் இதயத்தின் கதவைத் திறந்த ஒரே நபர் நீ மட்டுமே.",
+            "43. என் அன்பும், என் நம்பிக்கையும் என்றும் உனக்குத்தான்.",
+            "44. உன்னுடன் இருக்கும் போது உலகம் மிகவும் சிறியதாக தோன்றுகிறது.",
+            "45. நீ கொடுக்கும் தைரியம் தான் என்னை தினமும் வாழ வைக்கிறது.",
+            "46. என் கனவுகளுக்கு வண்ணம் தீட்டியது நீ தான். 🎨",
+            "47. உன்னை எண்ணி வாழும் இந்த வாழ்க்கை மிகவும் அழகானது.",
+            "48. உன் மேல் நான் வைத்திருக்கும் அன்பு எப்போதும் மாறாது.",
+            "49. நீ என் வாழ்வின் மிக இனிமையான பாட்டு. 🎶",
+            "50. அரை சதவிகிதம் அல்ல, முழுமையாக என் இதயம் உனக்கே சொந்தம்! ❤️",
+            "51. உன்னைப் பற்றிய எண்ணங்கள் என் நாளை இனிமையாக்குகின்றன.",
+            "52. என் வாழ்வின் சிறந்த நண்பனும் நீ, அன்பும் நீ.",
+            "53. உன்னோடு பகிர்ந்த ஒவ்வொரு தருணமும் என் நினைவில் வாழ்கிறது.",
+            "54. நீ சிரித்துக் கொண்டே இரு, உலகையே வெல்லலாம்!",
+            "55. என் வாழ்வின் ஒவ்வொரு காலையிலும் உன் நினைவே முதலில் வரும். ☀️",
+            "56. நீ என் வாழ்வில் வீசிய பேரன்பின் அலை.",
+            "57. உன் அருகாமை தரும் நிம்மதி வேறு எங்கும் கிடைக்காது.",
+            "58. உலகின் மிக அழகான விஷயம் உன் இதயம் தான்.",
+            "59. என்றும் உன் நலம் விரும்பும் ஒரே நபர் நான்.",
+            "60. நீ எனக்குக் கிடைத்த வரப்பிரசாதம்! ✨",
+            "61. உன் அன்பை விட சிறந்தது இந்த உலகில் எதுவும் இல்லை.",
+            "62. வாழ்க்கை அழகானதாக மாறியதற்கு நீயே காரணம்.",
+            "63. உன் பேச்சில் இருக்கும் உண்மை என் மனதை தொடுகிறது.",
+            "64. நீ அமைதியாக இருந்தாலும் உன் அன்பு உரக்கப் பேசுகிறது.",
+            "65. என்றென்றும் உன்னுடன் இருக்க என் இதயம் துடிக்கிறது.",
+            "66. உன்னுடைய ஒவ்வொரு செயலும் எனக்கு ஆச்சரியத்தைத் தருகிறது.",
+            "67. என் கவலைகளைப் போக்கும் மந்திரவாதி நீ!",
+            "68. நீ சிரிக்கும் போது உன் கண்களில் தெரியும் ஒளி எனக்குப் பிடிக்கும். ✨",
+            "69. உனக்காக எதையும் செய்யத் துணியும் அன்பை எனக்குத் தந்தாய்.",
+            "70. என் வாழ்வின் அழகான திருப்பம் நீ வந்த நாள் தான்.",
+            "71. உன்னை நேசிப்பதே என் அன்றாட வேலையாகிவிட்டது. ❤️",
+            "72. உன்னுடன் நான் இருக்கும் போது உலகையே மறந்துவிடுகிறேன்.",
+            "73. என் இதயத்தின் ஒரே துடிப்பு நீ தான்.",
+            "74. என்றும் மாறாத தூய்மையான அன்பு உனக்கு சொந்தமானது.",
+            "75. உன்னை என் வாழ்வின் துணையாகப் பெற்றது என் அதிர்ஷ்டம். 🍀",
+            "76. உன்னைப் பற்றிப் யோசிக்கும் போது என் உதட்டில் புன்னகை வருகிறது.",
+            "77. என் வாழ்நாளின் இறுதி வரை உன் அன்பே எனக்கு வேண்டும்.",
+            "78. உன்னுடைய நேர்மை எனக்கு மிகவும் பிடித்த ஒன்று.",
+            "79. நீ என் வாழ்க்கைக்குக் கிடைத்த ஒரு பிரகாசமான ஒளி.",
+            "80. என் வாழ்க்கையின் ஒவ்வொரு அத்தியாயத்திலும் உனக்கே முதலிடம்.",
+            "81. உன்னுடன் பேசும் போது என் மனக் கவலைகள் பறந்துபோகின்றன.",
+            "82. நீ எனக்குத் தந்த அன்பு என்றும் அழியாதது.",
+            "83. என் உலகின் ஒரே மையம் நீ மட்டுமே. 🌍",
+            "84. உன்னுடைய ஒவ்வொரு பார்வையும் எனக்குள் ஒரு புது நம்பிக்கையைத் தருகிறது.",
+            "85. எந்த சூழ்நிலையிலும் நான் உன்னை விட்டுப் பிரியமாட்டேன்.",
+            "86. என் ஆசைகள் அனைத்தும் உன்னைச் சுற்றியே இருக்கின்றன.",
+            "87. நீ என் வாழ்வின் மிகச் சிறந்த பொக்கிஷம்.",
+            "88. என்றும் உன் அன்பில் திளைத்திருக்க விரும்புகிறேன். 💖",
+            "89. உனக்கு நான் தரும் ஒரே வாக்குறுதி: என்றும் மாறாத அன்பு!",
+            "90. உன்னுடன் கழிக்கும் ஒவ்வொரு நாளும் எனக்கு ஒரு பண்டிகை தான். 🥳",
+            "91. என் வாழ்க்கையின் மிக அழகிய தேடல் உன்னில் தான் முடிந்தது.",
+            "92. நீ இல்லாமல் என் வாழ்வின் ஒரு நொடியும் நகர முடியாது.",
+            "93. உன்னுடைய மென்மையான அன்பு என் இதயத்தைக் கொள்ளையடித்தது.",
+            "94. என்றுமே உன்னை சந்தோஷமாக வைத்திருக்க என் முழு முயற்சி இருக்கும்.",
+            "95. என் உலகத்தில் நீ மட்டுமே பேரழகு!",
+            "96. உன் அன்பு எனக்குக் கிடைத்த மிக உயர்ந்த பரிசு.",
+            "97. இந்த 100 நாட்களும் உன்னுடன் அன்பைப் பகிர்ந்ததில் மிகுந்த மகிழ்ச்சி! 💕",
+            "98. உன் அன்பு இல்லாமல் என் வாழ்க்கை முழுமையடையாது.",
+            "99. இனி வரும் ஒவ்வொரு நாளும் உன்னுடன் அழகாக மாறப்போகிறது.",
+            "100. 100 நாட்கள் முடிந்தாலும், என் அன்பு என்றென்றும் தொடரும்! ❤️ Endless Love!"
+        ];
+
+        const startDateKey = 'roll_start_date_v1';
         let startDate = localStorage.getItem(startDateKey);
+        const now = new Date();
 
         if (!startDate) {
-            startDate = new Date().getTime();
-            localStorage.setItem(startDateKey, startDate);
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            localStorage.setItem(startDateKey, todayStart);
+            startDate = todayStart;
+        } else {
+            startDate = Number(startDate);
         }
 
-        const now = new Date().getTime();
-        const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24)) + 1;
-        const currentDayIndex = Math.min(diffDays, 100) ;
+        const oneDayMs = 24 * 60 * 60 * 1000;
+        const diffDays = Math.floor((now.getTime() - startDate) / oneDayMs);
+        const currentDayIndex = Math.min(Math.max(diffDays, 0), 99);
 
         document.getElementById('dayCounter').innerText = `Day ${currentDayIndex + 1} / 100`;
 
-        function openRoll() {
-            const roll = document.getElementById('paperRoll');
+        const audio = document.getElementById('bgMusic');
+        const songIndex = currentDayIndex % songList.length;
+        audio.src = songList[songIndex];
+
+        let hasPlayed = false;
+        document.body.addEventListener('click', function() {
+            if (!hasPlayed && audio.src) {
+                audio.play().then(() => {
+                    hasPlayed = true;
+                    document.getElementById('musicBtn').style.display = 'flex';
+                }).catch(() => {});
+            }
+        });
+
+        const lastOpenedDay = localStorage.getItem('last_opened_day');
+        if (lastOpenedDay !== null && Number(lastOpenedDay) === currentDayIndex) {
+            showOpenedState();
+        }
+
+        function openEnvelope(event) {
+            const wrapper = document.getElementById('envelopeWrapper');
+            
+            createHearts(event);
+
+            if (wrapper.classList.contains('open')) return;
+
+            showOpenedState();
+            localStorage.setItem('last_opened_day', currentDayIndex);
+        }
+
+        function showOpenedState() {
+            const wrapper = document.getElementById('envelopeWrapper');
             const msgBox = document.getElementById('messageBox');
             const lockMsg = document.getElementById('lockMsg');
+            const tapHint = document.getElementById('tapHint');
+            const musicBtn = document.getElementById('musicBtn');
 
-            // Set current message
-            msgBox.innerText = messages[currentDayIndex] || "100 நாட்களின் அன்புச் செய்திகள் நிறைவடைந்தன! ❤️";
-            
-            // Open animation
-            roll.classList.add('open');
-            
+            msgBox.innerText = messages[currentDayIndex];
+            wrapper.classList.add('open');
+            if (tapHint) tapHint.style.display = 'none';
+
+            if (audio.src) {
+                audio.play().then(() => {
+                    hasPlayed = true;
+                    musicBtn.style.display = 'flex';
+                }).catch(() => {
+                    musicBtn.style.display = 'flex';
+                    musicBtn.innerText = '🎵 இசையை இயக்கு';
+                });
+            }
+
             setTimeout(() => {
                 lockMsg.style.display = 'block';
-            }, 800);
+            }, 1200);
+        }
+
+        function toggleMusic(event) {
+            event.stopPropagation();
+            const musicBtn = document.getElementById('musicBtn');
+
+            if (audio.paused) {
+                audio.play();
+                musicBtn.innerText = '🎵 இசையை நிறுத்து';
+            } else {
+                audio.pause();
+                musicBtn.innerText = '🎵 இசையை இயக்கு';
+            }
+        }
+
+        function createHearts(event) {
+            const heartIcons = ['❤️', '💖', '💕', '💗', '✨', '🌸', '💌'];
+            const count = 18;
+
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+
+                const x = (event.clientX || window.innerWidth / 2) + (Math.random() - 0.5) * 150;
+                const y = (event.clientY || window.innerHeight / 2) + (Math.random() - 0.5) * 80;
+
+                heart.style.left = `${x}px`;
+                heart.style.top = `${y}px`;
+                heart.style.fontSize = `${Math.random() * 15 + 18}px`;
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        }
     </script>
 </body>
 </html>
