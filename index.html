@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -302,7 +302,7 @@
 <body>
 
     <div class="container">
-        <h1>message of the day💌<span class="heart">❤️</span></h1>
+        <h1>Daily Love Note <span class="heart">❤️</span></h1>
         <div class="day-badge" id="dayCounter">Day 1 / 100</div>
 
         <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope(event)">
@@ -318,14 +318,14 @@
             </div>
         </div>
 
-        <div class="tap-hint" id="tapHint">💌 Untie the ribbon and separate the letter......</div>
+        <div class="tap-hint" id="tapHint">💌 Untie the ribbon to open your letter...</div>
 
         <button class="music-btn" id="musicBtn" onclick="toggleMusic(event)">
-            🎵 stop music
+            🎵 Pause Music
         </button>
 
         <div class="lock-msg" id="lockMsg">
-            🔒 Today's message has been opened! The next message will open tomorrow.
+            🔒 Today's note is unlocked! Next surprise opens tomorrow.
         </div>
     </div>
 
@@ -333,116 +333,116 @@
 
     <script>
         const songList = [
-            "en roja.mp3",
             "aathi.mp3",
+            "en roja.mp3",
             "kalayni.mp3",
-            "kalyani.mp3",
+            "kalyani mix.mp3",
             "kannukulla.mp3",
             "kurunmgil.mp3",
             "pesamale.mp3"
         ];
 
         const messages = [
-            "1. உங்களுடைய புன்னகை தான் என் நாளின் சிறந்த தொடக்கம்! 😊",
-            "2. நீ என் வாழ்வில் வந்ததற்கு தினமும் நன்றி சொல்கிறேன்! ❤️",
-            "3. எவ்வளவு கஷ்டமான நாளாக இருந்தாலும் உன்னுடன் பேசினால் எல்லாம் சரியாகிவிடும்.",
-            "4. உன் அன்பு எனக்குக் கிடைத்த மிகப்பெரிய பொக்கிஷம். ✨",
-            "5. எப்போதும் உன்னை மகிழ்ச்சியாக வைத்திருக்க விரும்புபவன் நான்.",
-            "6. இன்று உனக்கான ஒரு சிறப்பான நாளாக அமையட்டும்! 🌸",
-            "7. உன் குரல் கேட்கும் ஒவ்வொரு நொடியும் எனக்கு சிறப்புத் தான்.",
-            "8. எப்போதும் என்னோடு இரு, அதுவே எனக்கு போதும்! 💕",
-            "9. உலகின் சிறந்த மனிதருக்கு என் இனிய காலை வணக்கம்!",
-            "10. நீ இல்லாமல் என் உலகம் முழுமை பெறாது. 💖",
-            "11. உன் நினைவுகள் என் இதயத்திற்கு என்றும் இனிமையானவை.",
-            "12. என் வாழ்க்கையின் ஒவ்வொரு அழகிய தருணத்திலும் நீ இருக்கிறாய்.",
-            "13. நீ சிரிக்கும்போது இந்த உலகமே அழகாக மாறுகிறது! 😊",
-            "14. உன்னை நேசிப்பது என் வாழ்வின் மிகச் சிறந்த முடிவு.",
-            "15. எனக்குக் கிடைத்த மிகப்பெரிய பரிசு உன்னுடைய அன்புதான். 🎁",
-            "16. எந்த சூழ்நிலையிலும் உனக்காக நான் இருப்பேன். ❤️",
-            "17. உன்னுடைய அன்பான வார்த்தைகள் என் சோர்வை நீக்கும் மருந்து.",
-            "18. நீ என் வாழ்வில் வந்த பிறகு தான் காதல் என்றால் என்னவென்று புரிந்தது.",
-            "19. என் ஒவ்வொரு பிரார்த்தனையிலும் உனக்கான இடம் உண்டு. 🙏",
-            "20. உன்னுடன் கழிக்கும் ஒவ்வொரு நொடியும் ஒரு பொன்னான நேரம்.",
-            "21. உன் கண்கள் பேசும் மொழியை நான் தினமும் ரசிக்கிறேன்.",
-            "22. என் வாழ்வின் அழகான கவிதை நீ! 📜",
-            "23. உன்னை மறக்க முடியாத அளவுக்கு என் மனதை கவர்ந்துவிட்டாய்.",
-            "24. உலகின் அனைத்து மகிழ்ச்சியும் உனக்குக் கிடைக்கட்டும். 🌟",
-            "25. உன் அன்பு என் இதயத்திற்கு என்றென்றும் அமைதியை தருகிறது.",
-            "26. நான் உன்னை நேசிப்பது வார்த்தைகளுக்கு அப்பாற்பட்டது.",
-            "27. நீ தொடும் ஒவ்வொரு காரியமும் வெற்றியில் முடியட்டும்! 🌺",
-            "28. என் வாழ்க்கைப் பயணத்தில் உன்னோடு நடப்பதே என் ஆசை.",
-            "29. எப்போதும் உன்னைப் பாதுகாப்பாகவும் அன்பாகவும் பார்த்துக் கொள்வேன்.",
-            "30. நீ என் வாழ்வில் வீசும் தென்றல் காற்று. 🍃",
-            "31. உன்னுடன் பேசும்போது நேரம் போவதே தெரியவில்லை.",
-            "32. என் தனிமையை மாற்றிய ஒரே மாயக்காரன் நீ தான். ✨",
-            "33. உன்னுடைய அமைதியான அன்பு எனக்கு மிகப்பெரிய பலம்.",
-            "34. என்றும் குறையாத அன்பு உனக்காக என் இதயத்தில் உண்டு.",
-            "35. உன்னை பார்த்த அந்த முதல் நொடி இன்னும் என் நினைவில் இருக்கிறது. 😍",
-            "36. வாழ்க்கை என்னும் கடலில் நீ தான் என் கலங்கரை விளக்கம்.",
-            "37. நீ சந்தோஷமாக இருக்கும் போது என் மனமும் நிறைகிறது.",
-            "38. என்றும் பிரியாத அன்பு என்றென்றும் நமக்குள் இருக்கட்டும்.",
-            "39. உனக்காக வாழும் ஒவ்வொரு நாளும் எனக்கு மிகவும் பிடிக்கும்.",
-            "40. உன்னுடைய ஒரு மெல்லிய சிரிப்பு என் எல்லா கவலையையும் போக்கிவிடும்.",
-            "41. நீ தான் என் வாழ்க்கையின் வசந்த காலம்! 🌸",
-            "42. என் இதயத்தின் கதவைத் திறந்த ஒரே நபர் நீ மட்டுமே.",
-            "43. என் அன்பும், என் நம்பிக்கையும் என்றும் உனக்குத்தான்.",
-            "44. உன்னுடன் இருக்கும் போது உலகம் மிகவும் சிறியதாக தோன்றுகிறது.",
-            "45. நீ கொடுக்கும் தைரியம் தான் என்னை தினமும் வாழ வைக்கிறது.",
-            "46. என் கனவுகளுக்கு வண்ணம் தீட்டியது நீ தான். 🎨",
-            "47. உன்னை எண்ணி வாழும் இந்த வாழ்க்கை மிகவும் அழகானது.",
-            "48. உன் மேல் நான் வைத்திருக்கும் அன்பு எப்போதும் மாறாது.",
-            "49. நீ என் வாழ்வின் மிக இனிமையான பாட்டு. 🎶",
-            "50. அரை சதவிகிதம் அல்ல, முழுமையாக என் இதயம் உனக்கே சொந்தம்! ❤️",
-            "51. உன்னைப் பற்றிய எண்ணங்கள் என் நாளை இனிமையாக்குகின்றன.",
-            "52. என் வாழ்வின் சிறந்த நண்பனும் நீ, அன்பும் நீ.",
-            "53. உன்னோடு பகிர்ந்த ஒவ்வொரு தருணமும் என் நினைவில் வாழ்கிறது.",
-            "54. நீ சிரித்துக் கொண்டே இரு, உலகையே வெல்லலாம்!",
-            "55. என் வாழ்வின் ஒவ்வொரு காலையிலும் உன் நினைவே முதலில் வரும். ☀️",
-            "56. நீ என் வாழ்வில் வீசிய பேரன்பின் அலை.",
-            "57. உன் அருகாமை தரும் நிம்மதி வேறு எங்கும் கிடைக்காது.",
-            "58. உலகின் மிக அழகான விஷயம் உன் இதயம் தான்.",
-            "59. என்றும் உன் நலம் விரும்பும் ஒரே நபர் நான்.",
-            "60. நீ எனக்குக் கிடைத்த வரப்பிரசாதம்! ✨",
-            "61. உன் அன்பை விட சிறந்தது இந்த உலகில் எதுவும் இல்லை.",
-            "62. வாழ்க்கை அழகானதாக மாறியதற்கு நீயே காரணம்.",
-            "63. உன் பேச்சில் இருக்கும் உண்மை என் மனதை தொடுகிறது.",
-            "64. நீ அமைதியாக இருந்தாலும் உன் அன்பு உரக்கப் பேசுகிறது.",
-            "65. என்றென்றும் உன்னுடன் இருக்க என் இதயம் துடிக்கிறது.",
-            "66. உன்னுடைய ஒவ்வொரு செயலும் எனக்கு ஆச்சரியத்தைத் தருகிறது.",
-            "67. என் கவலைகளைப் போக்கும் மந்திரவாதி நீ!",
-            "68. நீ சிரிக்கும் போது உன் கண்களில் தெரியும் ஒளி எனக்குப் பிடிக்கும். ✨",
-            "69. உனக்காக எதையும் செய்யத் துணியும் அன்பை எனக்குத் தந்தாய்.",
-            "70. என் வாழ்வின் அழகான திருப்பம் நீ வந்த நாள் தான்.",
-            "71. உன்னை நேசிப்பதே என் அன்றாட வேலையாகிவிட்டது. ❤️",
-            "72. உன்னுடன் நான் இருக்கும் போது உலகையே மறந்துவிடுகிறேன்.",
-            "73. என் இதயத்தின் ஒரே துடிப்பு நீ தான்.",
-            "74. என்றும் மாறாத தூய்மையான அன்பு உனக்கு சொந்தமானது.",
-            "75. உன்னை என் வாழ்வின் துணையாகப் பெற்றது என் அதிர்ஷ்டம். 🍀",
-            "76. உன்னைப் பற்றிப் யோசிக்கும் போது என் உதட்டில் புன்னகை வருகிறது.",
-            "77. என் வாழ்நாளின் இறுதி வரை உன் அன்பே எனக்கு வேண்டும்.",
-            "78. உன்னுடைய நேர்மை எனக்கு மிகவும் பிடித்த ஒன்று.",
-            "79. நீ என் வாழ்க்கைக்குக் கிடைத்த ஒரு பிரகாசமான ஒளி.",
-            "80. என் வாழ்க்கையின் ஒவ்வொரு அத்தியாயத்திலும் உனக்கே முதலிடம்.",
-            "81. உன்னுடன் பேசும் போது என் மனக் கவலைகள் பறந்துபோகின்றன.",
-            "82. நீ எனக்குத் தந்த அன்பு என்றும் அழியாதது.",
-            "83. என் உலகின் ஒரே மையம் நீ மட்டுமே. 🌍",
-            "84. உன்னுடைய ஒவ்வொரு பார்வையும் எனக்குள் ஒரு புது நம்பிக்கையைத் தருகிறது.",
-            "85. எந்த சூழ்நிலையிலும் நான் உன்னை விட்டுப் பிரியமாட்டேன்.",
-            "86. என் ஆசைகள் அனைத்தும் உன்னைச் சுற்றியே இருக்கின்றன.",
-            "87. நீ என் வாழ்வின் மிகச் சிறந்த பொக்கிஷம்.",
-            "88. என்றும் உன் அன்பில் திளைத்திருக்க விரும்புகிறேன். 💖",
-            "89. உனக்கு நான் தரும் ஒரே வாக்குறுதி: என்றும் மாறாத அன்பு!",
-            "90. உன்னுடன் கழிக்கும் ஒவ்வொரு நாளும் எனக்கு ஒரு பண்டிகை தான். 🥳",
-            "91. என் வாழ்க்கையின் மிக அழகிய தேடல் உன்னில் தான் முடிந்தது.",
-            "92. நீ இல்லாமல் என் வாழ்வின் ஒரு நொடியும் நகர முடியாது.",
-            "93. உன்னுடைய மென்மையான அன்பு என் இதயத்தைக் கொள்ளையடித்தது.",
-            "94. என்றுமே உன்னை சந்தோஷமாக வைத்திருக்க என் முழு முயற்சி இருக்கும்.",
-            "95. என் உலகத்தில் நீ மட்டுமே பேரழகு!",
-            "96. உன் அன்பு எனக்குக் கிடைத்த மிக உயர்ந்த பரிசு.",
-            "97. இந்த 100 நாட்களும் உன்னுடன் அன்பைப் பகிர்ந்ததில் மிகுந்த மகிழ்ச்சி! 💕",
-            "98. உன் அன்பு இல்லாமல் என் வாழ்க்கை முழுமையடையாது.",
-            "99. இனி வரும் ஒவ்வொரு நாளும் உன்னுடன் அழகாக மாறப்போகிறது.",
-            "100. 100 நாட்கள் முடிந்தாலும், என் அன்பு என்றென்றும் தொடரும்! ❤️ Endless Love!"
+            "1. Your smile is the best start to my day! 😊",
+            "2. I thank universe every day for bringing you into my life! ❤️",
+            "3. No matter how tough the day is, talking to you makes everything better.",
+            "4. Your love is the greatest gift I have ever received. ✨",
+            "5. I always want to be the reason behind your smile.",
+            "6. Wishing you a wonderful and special day today! 🌸",
+            "7. Every moment I hear your voice feels so special.",
+            "8. Just stay with me forever, that's all I need! 💕",
+            "9. Good morning to the most amazing person in the world!",
+            "10. My world is incomplete without you. 💖",
+            "11. Memories with you are the sweetest part of my heart.",
+            "12. You are present in every beautiful moment of my life.",
+            "13. When you smile, the whole world turns beautiful! 😊",
+            "14. Loving you is the best decision of my life.",
+            "15. Your love is the biggest gift of my life. 🎁",
+            "16. I will always be there for you, no matter what. ❤️",
+            "17. Your sweet words are the best medicine for my fatigue.",
+            "18. After you entered my life, I truly understood what love means.",
+            "19. You have a special place in my prayers every single day. 🙏",
+            "20. Every second spent with you is pure golden time.",
+            "21. I fall in love with the silent language of your eyes every day.",
+            "22. You are the sweetest poem of my life! 📜",
+            "23. You have captured my heart beyond words.",
+            "24. May all the happiness in the world be yours. 🌟",
+            "25. Your love brings eternal peace to my soul.",
+            "26. My love for you is far beyond words.",
+            "27. May everything you touch turn into success! 🌺",
+            "28. Walking with you in this journey of life is my dream.",
+            "29. I will always protect and love you unconditionally.",
+            "30. You are the gentle breeze in my life. 🍃",
+            "31. Time flies whenever I talk to you.",
+            "32. You are the magician who cured my loneliness. ✨",
+            "33. Your calm love is my biggest strength.",
+            "34. My heart holds endless love just for you.",
+            "35. I still remember the very first moment I saw you. 😍",
+            "36. You are my lighthouse in the ocean of life.",
+            "37. When you are happy, my heart fills with joy.",
+            "38. May our bond remain forever unbroken.",
+            "39. I love living every single day for you.",
+            "40. Your single gentle smile chases away all my worries.",
+            "41. You are the beautiful spring season of my life! 🌸",
+            "42. You are the only one who unlocked my heart.",
+            "43. My love and my trust belong to you forever.",
+            "44. The world feels small when I am with you.",
+            "45. The courage you give me keeps me going every day.",
+            "46. You painted colors into my dreams. 🎨",
+            "47. Living this life thinking of you is so beautiful.",
+            "48. My love for you will never fade away.",
+            "49. You are the sweetest melody of my life. 🎶",
+            "50. My entire heart belongs completely to you! ❤️",
+            "51. Thoughts of you make my day bright and sweet.",
+            "52. You are my best friend and my true love.",
+            "53. Every moment shared with you stays forever in my memory.",
+            "54. Keep smiling, and you can conquer the world!",
+            "55. Every morning begins with thoughts of you. ☀️",
+            "56. You are a wave of immense love in my life.",
+            "57. The comfort of your presence cannot be found anywhere else.",
+            "58. Your heart is the most beautiful thing in this world.",
+            "59. I am the person who always wishes the best for you.",
+            "60. You are a true blessing in my life! ✨",
+            "61. Nothing in this world is better than your love.",
+            "62. You are the reason my life became so beautiful.",
+            "63. The honesty in your speech touches my heart deeply.",
+            "64. Even when you are silent, your love speaks loudly.",
+            "65. My heart beats to be with you forever.",
+            "66. Every little thing you do surprises me.",
+            "67. You are the magician who wipes away my worries!",
+            "68. I love the sparkle in your eyes when you smile. ✨",
+            "69. You gave me a love that inspires me to do anything for you.",
+            "70. The day you entered my life was the best plot twist ever.",
+            "71. Loving you has become my daily routine. ❤️",
+            "72. When I am with you, I forget the whole world.",
+            "73. You are the single heartbeat of my soul.",
+            "74. A pure and unchanging love belongs only to you.",
+            "75. I am so lucky to have you as my partner. 🍀",
+            "76. Whenever I think of you, a smile pops on my face.",
+            "77. I need your love till the very last day of my life.",
+            "78. Your honesty is one of the things I love most about you.",
+            "79. You are the brightest light in my life.",
+            "80. You hold the first place in every chapter of my life.",
+            "81. Talking to you makes all my worries fly away.",
+            "82. The love you gave me is immortal.",
+            "83. You are the center of my universe. 🌍",
+            "84. Every glance of yours gives me new hope.",
+            "85. I will never leave your side in any situation.",
+            "86. All my wishes revolve around you.",
+            "87. You are the precious treasure of my life.",
+            "88. I want to drown in your love forever. 💖",
+            "89. My one promise to you: My love will never change!",
+            "90. Every day spent with you feels like a celebration. 🥳",
+            "91. My life's most beautiful search ended in you.",
+            "92. I can't move forward a single second without you.",
+            "93. Your soft love stole my heart completely.",
+            "94. My endless effort will be to keep you happy forever.",
+            "95. You are the ultimate beauty in my world!",
+            "96. Your love is the highest reward I have received.",
+            "97. So happy to share love with you for these 100 days! 💕",
+            "98. My life is incomplete without your love.",
+            "99. Every upcoming day is going to be wonderful with you.",
+            "100. Even after 100 days, my love goes on forever! ❤️ Endless Love!"
         ];
 
         const startDateKey = 'roll_start_date_v1';
@@ -525,15 +525,15 @@
 
             if (audio.paused) {
                 audio.play();
-                musicBtn.innerText = '🎵 pause the music;
+                musicBtn.innerText = '🎵 Pause Music';
             } else {
                 audio.pause();
-                musicBtn.innerText = '🎵 Play The Music;
+                musicBtn.innerText = '🎵 Play Music';
             }
         }
 
         function createHearts(event) {
-            const heartIcons = ['🦋', '💖', '💕', '💝', '✨', '🌸', '💌'];
+            const heartIcons = ['❤️', '💖', '💕', '💗', '✨', '🌸', '💌'];
             const count = 18;
 
             for (let i = 0; i < count; i++) {
