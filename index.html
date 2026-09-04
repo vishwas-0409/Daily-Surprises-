@@ -140,7 +140,6 @@ if (music) {
 document.body.addEventListener('click', () => {
     if (music && music.paused) {
         music.play().catch(error => console.log("Audio play error:", error));
-    }
 }, { once: true });
 </script>
     <div class="container">
@@ -293,7 +292,6 @@ document.body.addEventListener('click', () => {
             setTimeout(() => {
                 lockMsg.style.display = 'block';
             }, 800);
-        }
     </script>
 </body>
 </html>
